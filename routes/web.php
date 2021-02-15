@@ -17,4 +17,8 @@ use App\Http\Controllers\Admin\HomeController;
 Route::get('/', function () {
     return redirect('admin/home');
 });
-Route::get('admin/home', [HomeController::class, 'index'])->name('home');
+Route::get('admin/login', [HomeController::class, 'login'])->name('login');
+Route::post('admin/postlogin', [HomeController::class, 'postlogin']);
+Route::group(['middleware' => ['auth', 'checkRole:1']], function () {
+    Route::get('admin/home', [HomeController::class, 'index'])->name('home');
+});
