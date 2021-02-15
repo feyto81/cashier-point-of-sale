@@ -27,4 +27,11 @@ class HomeController extends Controller
         alert()->error('Email dan Password Salah', 'Gagal');
         return redirect('admin/login');
     }
+
+    public function logout()
+    {
+        Auth::logout();
+        alert()->success('Anda Berhasil Logout', 'Berhasil');
+        return redirect('admin/login');
+    }
 }

@@ -19,6 +19,7 @@ Route::get('/', function () {
 });
 Route::get('admin/login', [HomeController::class, 'login'])->name('login');
 Route::post('admin/postlogin', [HomeController::class, 'postlogin']);
+Route::get('admin/logout', [HomeController::class, 'logout']);
 Route::group(['middleware' => ['auth', 'checkRole:1']], function () {
     Route::get('admin/home', [HomeController::class, 'index'])->name('home');
 });
