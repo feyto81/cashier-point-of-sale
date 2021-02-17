@@ -2,14 +2,15 @@
 @section('title','Edit Supplier | Kasir')
 @section('content')
 <main class="app-content">
-      <div class="app-title">
+    <div class="app-title">
         <div>
-          <h1><i class="fa fa-dashboard"></i> Edit Supplier</h1>
+          <h1><i class="fa fa-dashboard"></i> Add Supplier</h1>
           <p>Fill items carefully</p>
         </div>
         <ul class="app-breadcrumb breadcrumb">
           <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-          <li class="breadcrumb-item"><a href="">Edit Supplier</a></li>
+          <li class="breadcrumb-item"><a href="#">Supplier</a></li>
+          <li class="breadcrumb-item"><a href="#">Add Supplier</a></li>
         </ul>
       </div>
       <div class="row">
