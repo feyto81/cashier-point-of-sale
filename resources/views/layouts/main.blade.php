@@ -50,6 +50,12 @@
             <li><a class="treeview-item" href="{{url('/admin/supplier')}}"><i class="icon fa fa-circle-o"></i> All Supplier</a></li>
           </ul>
         </li>
+        <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-users"></i><span class="app-menu__label">Customer</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+          <ul class="treeview-menu">
+            <li><a class="treeview-item" href="{{url('/admin/customer/create')}}"><i class="icon fa fa-circle-o"></i> Add Customer</a></li>
+            <li><a class="treeview-item" href="{{url('/admin/customer')}}"><i class="icon fa fa-circle-o"></i> All Customer</a></li>
+          </ul>
+        </li>
       </ul>
     </aside>
     @yield('content')

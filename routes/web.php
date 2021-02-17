@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CustomerController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\SupplierController;
@@ -32,4 +33,14 @@ Route::group(['middleware' => ['auth', 'checkRole:1']], function () {
     Route::post('admin/supplier/import-excel', [SupplierController::class, 'import_excel']);
     Route::get('admin/supplier/edit/{supplier_id}', [SupplierController::class, 'edit']);
     Route::post('admin/supplier/update/{supplier_id}', [SupplierController::class, 'update']);
+
+    Route::get('admin/customer', [CustomerController::class, 'index']);
+    Route::get('admin/customer/create', [CustomerController::class, 'create']);
+    Route::post('admin/customer/store', [CustomerController::class, 'store']);
+    Route::get('admin/customer/destroy/{customer_id}', [CustomerController::class, 'destroy']);
+    Route::get('admin/customer/edit/{customer_id}', [CustomerController::class, 'edit']);
+    Route::post('admin/customer/update/{customer_id}', [CustomerController::class, 'update']);
+    Route::get('admin/customer/export-excel', [CustomerController::class, 'export_excel']);
+    Route::get('admin/customer/export-pdf', [CustomerController::class, 'export_pdf']);
+    Route::post('admin/customer/import-excel', [CustomerController::class, 'import_excel']);
 });
