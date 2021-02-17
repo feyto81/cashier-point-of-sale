@@ -30,4 +30,6 @@ Route::group(['middleware' => ['auth', 'checkRole:1']], function () {
     Route::get('admin/supplier/export-excel', [SupplierController::class, 'export_excel']);
     Route::get('admin/supplier/export-pdf', [SupplierController::class, 'export_pdf']);
     Route::post('admin/supplier/import-excel', [SupplierController::class, 'import_excel']);
+    Route::get('admin/supplier/edit/{supplier_id}', [SupplierController::class, 'edit']);
+    Route::post('admin/supplier/update/{supplier_id}', [SupplierController::class, 'update']);
 });

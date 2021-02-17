@@ -22,7 +22,23 @@
       </div>
     </div>
     <br>
-
+    @if (count($errors) > 0)
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="bs-component">
+            <div class="alert alert-dismissible alert-warning">
+              <button class="close" type="button" data-dismiss="alert">×</button>
+              <h4>Oops!</h4>
+              <p>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      @endif
     <div class="row">
       
       <div class="col-md-12">
@@ -57,7 +73,7 @@
                             data-updated="{{$item->updated_at}}">
                             <i class="fa fa-eye"></i>
                           </a>
-                          <a href="{{url('/supplier/edit-supplier/'.$item->supplier_id)}}" title="Edit Data" class="btn btn-primary btn-sm"><i class="fa fa-pencil fa-sm"></i></a>
+                          <a href="{{url('admin/supplier/edit/'.$item->supplier_id)}}" title="Edit Data" class="btn btn-primary btn-sm"><i class="fa fa-pencil fa-sm"></i></a>
                           <a href="#" class="btn btn-danger btn-sm btn-delete"  title="Hapus Data" supplier-id="{{$item->supplier_id}}"><i class="fas fa-sm fa fa-trash"></i></a>
                       </td>
                     </tr>
@@ -123,7 +139,7 @@
               </button>
             </div>
             <div class="modal-body">
-              <form action="{{url('/supplier/import-excel')}}" method="POST" enctype="multipart/form-data">
+              <form action="{{url('admin/supplier/import-excel')}}" method="POST" enctype="multipart/form-data">
                 {{csrf_field()}}
                 <div class="form-group">
                   <label for="validationServer033">Upload Supplier</label>

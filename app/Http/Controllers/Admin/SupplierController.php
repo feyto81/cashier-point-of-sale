@@ -8,6 +8,7 @@ use App\Models\Supplier;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\SupplierExcel;
 use App\Imports\SupplierImport;
+use PDF;
 
 class SupplierController extends Controller
 {
@@ -55,15 +56,29 @@ class SupplierController extends Controller
     }
 
 
-    public function edit($id)
+    public function edit($supplier_id)
     {
-        //
+        $data['supplier'] = Supplier::findOrFail($supplier_id);
+        return view('supplier.edit', $data);
     }
 
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $supplier_id)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|min:2',
+            'phone' => 'required|min:2|numeric',
+            'address' => 'required',
+            'description' => 'required',
+        ]);
+        $supplier = Supplier::find($supplier_id);
+        $supplier->name = $request->name;
+        $supplier->phone = $request->phone;
+        $supplier->address = $request->address;
+        $supplier->description = $request->description;
+        $supplier->update();
+        alert()->success('Supplier has been saved', 'Success');
+        return redirect('admin/supplier');
     }
 
 
@@ -92,5 +107,12 @@ class SupplierController extends Controller
         Excel::import(new SupplierImport, public_path('/file_supplier/' . $nama_file));
         alert()->success('Import Success', 'Success');
         return redirect()->back();
+    }
+
+    public function export_pdf()
+    {
+        $data['supplier'] = Supplier::all();
+        $pdf = PDF::loadView('export.supplier_pdf', $data);
+        return $pdf->stream('Supplier.pdf');
     }
 }
