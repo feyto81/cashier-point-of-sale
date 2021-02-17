@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\HomeController;
+use App\Http\Controllers\Admin\SupplierController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,4 +23,8 @@ Route::post('admin/postlogin', [HomeController::class, 'postlogin']);
 Route::get('admin/logout', [HomeController::class, 'logout']);
 Route::group(['middleware' => ['auth', 'checkRole:1']], function () {
     Route::get('admin/home', [HomeController::class, 'index'])->name('home');
+    Route::get('admin/supplier', [SupplierController::class, 'index']);
+    Route::get('admin/supplier/create', [SupplierController::class, 'create']);
+    Route::post('admin/supplier/store', [SupplierController::class, 'store']);
+    Route::get('admin/supplier/destroy/{supplier_id}', [SupplierController::class, 'destroy']);
 });
