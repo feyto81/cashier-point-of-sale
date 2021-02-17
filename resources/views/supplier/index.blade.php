@@ -129,11 +129,7 @@
                   <label for="validationServer033">Upload Supplier</label>
                  <input class="form-control"  type="file" name="file" required="required">
                  <small>(File Harus berupa xlsx,xlx,csv)</small>
-                 @if($errors->has('file'))
-                  <span class="text-danger">
-                    <small>{{$errors->first('file')}}</small>
-                  </span>
-                @endif
+                 
                   
                 </div>
                 <div class="modal-footer">

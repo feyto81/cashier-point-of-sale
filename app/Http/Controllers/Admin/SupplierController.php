@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Supplier;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\SupplierExcel;
+use App\Imports\SupplierImport;
 
 class SupplierController extends Controller
 {
@@ -70,5 +73,24 @@ class SupplierController extends Controller
         $supplier->delete();
         alert()->success('Category has been deleted.', 'Success');
         return back();
+    }
+
+    public function export_excel()
+    {
+        return Excel::download(new SupplierExcel, 'Supplier.xlsx');
+    }
+
+    public function import_excel(Request $request)
+    {
+        $this->validate($request, [
+            'file' => 'required|mimes:csv,xls,xlsx'
+        ]);
+
+        $file = $request->file('file');
+        $nama_file = rand() . $file->getClientOriginalName();
+        $file->move('file_supplier', $nama_file);
+        Excel::import(new SupplierImport, public_path('/file_supplier/' . $nama_file));
+        alert()->success('Import Success', 'Success');
+        return redirect()->back();
     }
 }

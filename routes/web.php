@@ -27,4 +27,7 @@ Route::group(['middleware' => ['auth', 'checkRole:1']], function () {
     Route::get('admin/supplier/create', [SupplierController::class, 'create']);
     Route::post('admin/supplier/store', [SupplierController::class, 'store']);
     Route::get('admin/supplier/destroy/{supplier_id}', [SupplierController::class, 'destroy']);
+    Route::get('admin/supplier/export-excel', [SupplierController::class, 'export_excel']);
+    Route::get('admin/supplier/export-pdf', [SupplierController::class, 'export_pdf']);
+    Route::post('admin/supplier/import-excel', [SupplierController::class, 'import_excel']);
 });
