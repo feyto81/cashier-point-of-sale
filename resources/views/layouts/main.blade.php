@@ -56,6 +56,13 @@
             <li><a class="treeview-item" href="{{url('/admin/customer')}}"><i class="icon fa fa-circle-o"></i> All Customer</a></li>
           </ul>
         </li>
+        <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-archive"></i><span class="app-menu__label">Products</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+          <ul class="treeview-menu">
+            <li><a class="treeview-item" href="{{url('admin/category')}}"><i class="icon fa fa-circle-o"></i> Categories</a></li>
+            <li><a class="treeview-item" href="{{url('admin/unit')}}"><i class="icon fa fa-circle-o"></i> Units</a></li>
+            <li><a class="treeview-item" href="{{url('admin/item')}}"><i class="icon fa fa-circle-o"></i> Items</a></li>
+          </ul>
+        </li>
       </ul>
     </aside>
     @yield('content')

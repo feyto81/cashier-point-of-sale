@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CustomerController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\HomeController;
@@ -43,4 +44,11 @@ Route::group(['middleware' => ['auth', 'checkRole:1']], function () {
     Route::get('admin/customer/export-excel', [CustomerController::class, 'export_excel']);
     Route::get('admin/customer/export-pdf', [CustomerController::class, 'export_pdf']);
     Route::post('admin/customer/import-excel', [CustomerController::class, 'import_excel']);
+
+    Route::get('admin/category', [CategoryController::class, 'index']);
+    Route::get('admin/category/create', [CategoryController::class, 'create']);
+    Route::post('admin/category/store', [CategoryController::class, 'store']);
+    Route::get('admin/category/destroy/{category_id}', [CategoryController::class, 'destroy']);
+    Route::get('admin/category/edit/{category_id}', [CategoryController::class, 'edit']);
+    Route::post('admin/category/update/{category_id}', [CategoryController::class, 'update']);
 });
