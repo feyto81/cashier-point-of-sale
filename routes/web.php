@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\CustomerController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\SupplierController;
+use App\Http\Controllers\Admin\UnitController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,4 +52,11 @@ Route::group(['middleware' => ['auth', 'checkRole:1']], function () {
     Route::get('admin/category/destroy/{category_id}', [CategoryController::class, 'destroy']);
     Route::get('admin/category/edit/{category_id}', [CategoryController::class, 'edit']);
     Route::post('admin/category/update/{category_id}', [CategoryController::class, 'update']);
+
+    Route::get('admin/unit', [UnitController::class, 'index']);
+    Route::get('admin/unit/create', [UnitController::class, 'create']);
+    Route::post('admin/unit/store', [UnitController::class, 'store']);
+    Route::get('admin/unit/destroy/{category_id}', [UnitController::class, 'destroy']);
+    Route::get('admin/unit/edit/{category_id}', [UnitController::class, 'edit']);
+    Route::post('admin/unit/update/{category_id}', [UnitController::class, 'update']);
 });
