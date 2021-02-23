@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CustomerController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\HomeController;
+use App\Http\Controllers\Admin\ItemController;
 use App\Http\Controllers\Admin\SupplierController;
 use App\Http\Controllers\Admin\UnitController;
 
@@ -59,4 +60,14 @@ Route::group(['middleware' => ['auth', 'checkRole:1']], function () {
     Route::get('admin/unit/destroy/{category_id}', [UnitController::class, 'destroy']);
     Route::get('admin/unit/edit/{category_id}', [UnitController::class, 'edit']);
     Route::post('admin/unit/update/{category_id}', [UnitController::class, 'update']);
+
+    Route::get('admin/item', [ItemController::class, 'index']);
+    Route::get('admin/item/create', [ItemController::class, 'create']);
+    Route::post('admin/item/store', [ItemController::class, 'store']);
+    Route::get('admin/item/destroy/{item_id}', [ItemController::class, 'destroy']);
+    Route::get('admin/item/edit/{item_id}', [ItemController::class, 'edit']);
+    Route::post('admin/item/update/{item_id}', [ItemController::class, 'update']);
+    Route::get('admin/item/print-barcode-qr-code/{item_id}', [ItemController::class, 'barcodeqrcode']);
+    Route::get('admin/item/barcode-print/{item_id}', [ItemController::class, 'print_barcode']);
+    Route::get('admin/item/qrcode-print/{item_id}', [ItemController::class, 'print_qrcode']);
 });
