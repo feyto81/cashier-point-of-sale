@@ -16,8 +16,8 @@
       <div class="row">
         <div class="col-md-12">
           <a href="{{url('admin/item/create')}}" class="btn btn-sm btn-success"><i class="fa fa-plus" aria-hidden="true"></i> Add Item</a>&nbsp;
-          <a href="{{url('/item/print-all-barcode')}}" target="_blank" class="btn btn-sm btn-primary"><i class="fa fa-print" aria-hidden="true"></i> Print All Barcode</a>&nbsp;
-          <a href="{{url('/item/print-all-qrcode')}}" class="btn btn-sm btn-danger" target="_blank"><i class="fa fa-print" aria-hidden="true"></i> Print All QR-Code</a>&nbsp;
+          <a href="{{url('admin/item/print-all-barcode')}}" target="_blank" class="btn btn-sm btn-primary"><i class="fa fa-print" aria-hidden="true"></i> Print All Barcode</a>&nbsp;
+          <a href="{{url('admin/item/print-all-qrcode')}}" class="btn btn-sm btn-danger" target="_blank"><i class="fa fa-print" aria-hidden="true"></i> Print All QR-Code</a>&nbsp;
         </div>
       </div>
       <br>

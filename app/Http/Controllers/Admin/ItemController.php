@@ -133,4 +133,18 @@ class ItemController extends Controller
         $pdf = PDF::loadView('product.item.print_qrcode', ['data' => $data]);
         return $pdf->stream('QR-Code.pdf');
     }
+
+    public function print_all_barcode()
+    {
+        $row = Item::all();
+        $pdf = PDF::loadView('product.item.all_barcode', ['row' => $row]);
+        return $pdf->stream('All Barcode.pdf');
+    }
+
+    public function print_all_qrcode()
+    {
+        $row = Item::all();
+        $pdf = PDF::loadView('product.item.all_qrcode', ['row' => $row]);
+        return $pdf->stream('All QR-Code.pdf');
+    }
 }

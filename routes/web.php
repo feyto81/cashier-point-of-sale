@@ -70,4 +70,6 @@ Route::group(['middleware' => ['auth', 'checkRole:1']], function () {
     Route::get('admin/item/print-barcode-qr-code/{item_id}', [ItemController::class, 'barcodeqrcode']);
     Route::get('admin/item/barcode-print/{item_id}', [ItemController::class, 'print_barcode']);
     Route::get('admin/item/qrcode-print/{item_id}', [ItemController::class, 'print_qrcode']);
+    Route::get('admin/item/print-all-barcode', [ItemController::class, 'print_all_barcode']);
+    Route::get('admin/item/print-all-qrcode', [ItemController::class, 'print_all_qrcode']);
 });
