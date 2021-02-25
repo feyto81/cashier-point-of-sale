@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\CustomerController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\ItemController;
+use App\Http\Controllers\Admin\StockInController;
 use App\Http\Controllers\Admin\SupplierController;
 use App\Http\Controllers\Admin\UnitController;
 
@@ -72,4 +73,7 @@ Route::group(['middleware' => ['auth', 'checkRole:1']], function () {
     Route::get('admin/item/qrcode-print/{item_id}', [ItemController::class, 'print_qrcode']);
     Route::get('admin/item/print-all-barcode', [ItemController::class, 'print_all_barcode']);
     Route::get('admin/item/print-all-qrcode', [ItemController::class, 'print_all_qrcode']);
+
+    Route::get('admin/stock-in', [StockInController::class, 'index']);
+    Route::get('admin/stock-in/add', [StockInController::class, 'create']);
 });
