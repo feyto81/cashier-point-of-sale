@@ -1,21 +1,21 @@
 @extends('layouts.main')
-@section('title','All Stock In | Kasir')
+@section('title','All Stock Out | Kasir')
 @section('content')
 <main class="app-content">
       <div class="app-title">
         <div>
-          <h1><i class="fa fa-th-list"></i> All Stock In</h1>
+          <h1><i class="fa fa-th-list"></i> All Stock Out</h1>
           <p>Table to display analytical data effectively</p>
         </div>
         <ul class="app-breadcrumb breadcrumb side">
           <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
           <li class="breadcrumb-item">Transaction</li>
-          <li class="breadcrumb-item active"><a href="#">All Stock In</a></li>
+          <li class="breadcrumb-item active"><a href="#">All Stock Out</a></li>
         </ul>
       </div>
       <div class="row">
         <div class="col-md-12">
-          <a href="{{url('admin/stock-in/add')}}" class="btn btn-sm btn-success"><i class="fa fa-plus" aria-hidden="true"></i> Add Stock In</a>&nbsp;
+          <a href="{{url('admin/stock-out/add')}}" class="btn btn-sm btn-success"><i class="fa fa-plus" aria-hidden="true"></i> Add Stock Out</a>&nbsp;
         </div>
       </div>
       <br>
@@ -27,21 +27,23 @@
                 <table class="table table-hover table-bordered" id="sampleTable">
                   <thead>
                     <tr>
-                      <th>No</th>
-                      <th>Barcode</th>
-                      <th>Product Item</th>
-                      <th>Qty</th>
-                      <th>Date</th>
-                      <th>Actions</th>
+                        <th>No</th>
+                        <th>Barcode</th>
+                        <th>Product Item</th>
+                        <th>Qty</th>
+                        <th>Info</th>
+                        <th>Date</th>
+                        <th>Actions</th>
                     </tr>
                   </thead>
                   <tbody>
                     @foreach($stock as $data)
-                      <tr>
+                    <tr>
                         <td>{{$loop->iteration}}</td>
                         <td>{{$data->Item->barcode}}</td>
                         <td>{{$data->Item->name}}</td>
                         <td>{{$data->qty}}</td>
+                        <td>{{$data->detail}}</td>
                         <td>{{$data->date}}</td>
                         <td>
                           <a id="set_dtl" class="btn btn-warning btn-sm" 
@@ -54,7 +56,7 @@
                           data-date="{{$data->date}}">
                           <i class="fa fa-eye"></i> Details
                         </a>
-                         <a href="#" class="btn btn-danger btn-sm btn-delete"  title="Hapus Data" stockin-id="{{$data->stockin_id}}"><i class="fas fa-sm fa fa-trash"></i>Hapus</a>
+                         <a href="#" class="btn btn-danger btn-sm btn-delete"  title="Hapus Data" stockout-id="{{$data->stockout_id}}"><i class="fas fa-sm fa fa-trash"></i>Hapus</a>
                         </td>
                       </tr>
                     @endforeach
@@ -67,53 +69,53 @@
       </div>
       @include('sweetalert::alert')
     </main>
-<div class="modal"  tabindex="-1" role="dialog"  id="modal-detail">
-  <div class="modal-dialog modal-sm">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Stock In Detail</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+    <div class="modal"  tabindex="-1" role="dialog"  id="modal-detail">
+        <div class="modal-dialog modal-sm">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Stock Out Detail</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body table-responsive">
+              <table class="table table-bordered table-striped" id="sampleTable">
+                <tbody>
+                  <tr>
+                    <th style="width: 35%">Barcode</th>
+                    <td><span id="barcode"></span></td>
+                  </tr>
+                  <tr>
+                    <th style="">Item Name</th>
+                    <td><span id="item_name"></span></td>
+                  </tr>
+                  <tr>
+                    <th style="">Detail</th>
+                    <td><span id="detail"></span></td>
+                  </tr>
+                  <tr>
+                    <th style="">Supplier Name</th>
+                    <td><span id="supplier_name"></span></td>
+                  </tr>
+                  <tr>
+                    <th style="">Qty</th>
+                    <td><span id="qty"></span></td>
+                  </tr>
+                  <tr>
+                    <th style="">Date</th>
+                    <td><span id="date"></span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="modal-body table-responsive">
-        <table class="table table-bordered table-striped" id="sampleTable">
-          <tbody>
-            <tr>
-              <th style="width: 35%">Barcode</th>
-              <td><span id="barcode"></span></td>
-            </tr>
-            <tr>
-              <th style="">Item Name</th>
-              <td><span id="item_name"></span></td>
-            </tr>
-            <tr>
-              <th style="">Detail</th>
-              <td><span id="detail"></span></td>
-            </tr>
-            <tr>
-              <th style="">Supplier Name</th>
-              <td><span id="supplier_name"></span></td>
-            </tr>
-            <tr>
-              <th style="">Qty</th>
-              <td><span id="qty"></span></td>
-            </tr>
-            <tr>
-              <th style="">Date</th>
-              <td><span id="date"></span></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-</div>
 @endsection
 @push('bottom')
     <script type="text/javascript">
           $('.btn-delete').click(function(){
-            var stockin_id = $(this).attr('stockin-id');
+            var stockout_id = $(this).attr('stockout-id');
             const swalWithBootstrapButtons = Swal.mixin({
                 customClass: {
                   confirmButton: 'btn btn-success',
@@ -124,7 +126,7 @@
 
               swalWithBootstrapButtons.fire({
                 title: 'Yakin Mau Dihapus',
-                text: "Mau dihapus data Stock",
+                text: "Mau dihapus data Stock Out",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonText: 'Yes, delete it!',
@@ -132,7 +134,7 @@
                 reverseButtons: true
               }).then((result) => {
                 if (result.value) {
-                  window.location = "/admin/stock-in/delete-stock/"+stockin_id+"";
+                  window.location = "/admin/stock-out/delete-stock/"+stockout_id+"";
                 } else if (
                   /* Read more about handling dismissals below */
                   result.dismiss === Swal.DismissReason.cancel

@@ -38,8 +38,8 @@
     <aside class="app-sidebar">
     <div class="app-sidebar__user"><img class="app-sidebar__user-avatar" src="{{asset('backend/images/48.jpg')}}" alt="User Image">
         <div>
-          <p class="app-sidebar__user-name">Feyto</p>
-              <span class="badge badge-success">Admin</span>
+          <p class="app-sidebar__user-name">{{ Auth::user()->name }}</p>
+              <span class="badge badge-success">{{Auth::user()->Level->name}}</span>
         </div>
       </div>
       <ul class="app-menu">

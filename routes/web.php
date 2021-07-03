@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\ItemController;
 use App\Http\Controllers\Admin\StockInController;
+use App\Http\Controllers\Admin\StockOutController;
 use App\Http\Controllers\Admin\SupplierController;
 use App\Http\Controllers\Admin\UnitController;
 
@@ -76,4 +77,11 @@ Route::group(['middleware' => ['auth', 'checkRole:1']], function () {
 
     Route::get('admin/stock-in', [StockInController::class, 'index']);
     Route::get('admin/stock-in/add', [StockInController::class, 'create']);
+    Route::post('admin/stock-in/store', [StockInController::class, 'store']);
+    Route::get('admin/stock-in/delete-stock/{stockin_id}', [StockInController::class, 'delete_stock_in']);
+
+    Route::get('admin/stock-out', [StockOutController::class, 'index']);
+    Route::get('admin/stock-out/add', [StockOutController::class, 'create']);
+    Route::post('admin/stock-out/store', [StockOutController::class, 'store']);
+    Route::get('admin/stock-out/delete-stock/{stockout_id}', [StockOutController::class, 'delete_stock_in']);
 });
