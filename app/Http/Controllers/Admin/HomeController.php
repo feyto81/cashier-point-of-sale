@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -20,18 +20,27 @@ class HomeController extends Controller
 
     public function postlogin(Request $request)
     {
-        if (Auth::attempt($request->only('email', 'password'))) {
+        $input = $request->all();
 
+        $this->validate($request, [
+            'email' => 'required',
+            'password' => 'required',
+            'g-recaptcha-response' => 'required|captcha',
+
+        ]);
+        if (Auth::attempt($request->only('email', 'password'))) {
+            $username = auth()->user()->username;
+            $level = Auth::user()->Level->name;
+            alert()->success('Welcome To Kasir Aplication', 'Success');
             return redirect('admin/home');
         }
-        alert()->error('Email dan Password Salah', 'Gagal');
-        return redirect('admin/login');
+        return redirect()->back()->with(['error' => 'Invalid email or password']);
     }
 
     public function logout()
     {
         Auth::logout();
         alert()->success('Anda Berhasil Logout', 'Berhasil');
-        return redirect('admin/login');
+        return redirect('admin/login')->with(['success' => 'You have successfully logged out']);
     }
 }
