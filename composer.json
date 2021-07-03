@@ -21,7 +21,8 @@
         "maatwebsite/excel": "^3.1",
         "milon/barcode": "^8.0",
         "nesbot/carbon": "^2.45",
-        "realrashid/sweet-alert": "^3.2"
+        "realrashid/sweet-alert": "^3.2",
+        "yoeunes/toastr": "^1.2"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

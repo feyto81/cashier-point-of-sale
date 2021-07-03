@@ -19,6 +19,7 @@
     <link rel="stylesheet" type="text/css" href="{{asset('backend/css/main.css')}}">
     <link rel="stylesheet" href="{{asset('backend/package/dist/sweetalert2.min.css')}}">
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    @toastr_css
    
   </head>
   <body class="app sidebar-mini">
@@ -110,6 +111,9 @@
     <script type="text/javascript" src="{{asset('backend/js/plugins/bootstrap-datepicker.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('backend/js/plugins/bootstrap-datepicker.min.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.js"></script>
+
+    @toastr_js
+    @toastr_render
     <script type="text/javascript">
       var data = {
         labels: ["January", "February", "March", "April", "May"],

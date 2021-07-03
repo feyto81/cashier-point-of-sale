@@ -154,63 +154,265 @@
       </div>
       @include('sweetalert::alert')
     </main>
-
+{{-- modal barcode --}}
+<div class="modal"  tabindex="-1" role="dialog"  id="modal-item">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Add Product Item</h5>
+          <button type="button" class="close" id="closeModalTambah" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body table-responsive">
+          <table class="table table-bordered table-striped" id="sampleTable">
+            <thead>
+              <tr>
+                <th>Barcode</th>
+                <th>Name</th>
+                <th>Unit</th>
+                <th>Price</th>
+                <th>Stock</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              @foreach($item as $data)
+                <tr>
+                  <td>{{$data->barcode}}</td>
+                  <td>{{$data->name}}</td>
+                  <td>{{$data->unit_name}}</td>
+                  <td>{{$data->price}}</td>
+                  <td>{{$data->stock}}</td>
+                  <td class="text-right">
+                    <button class="btn btn-info btn-xs" id="select"
+                     data-id="{{$data->item_id}}"
+                     data-barcode="{{$data->barcode}}"
+                     data-price="{{$data->price}}"
+                     data-stock="{{$data->stock}}">
+                      <i class="fa fa-check"></i> Select
+                    </button>
+                  </td>
+                </tr>
+              @endforeach
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
 @endsection
 @push('bottom')
-    <script type="text/javascript">
-          $('.btn-delete').click(function(){
-            var stockout_id = $(this).attr('stockout-id');
-            const swalWithBootstrapButtons = Swal.mixin({
-                customClass: {
-                  confirmButton: 'btn btn-success',
-                  cancelButton: 'btn btn-danger'
-                },
-                buttonsStyling: false
-              })
+<script type="text/javascript">
 
-              swalWithBootstrapButtons.fire({
-                title: 'Yakin Mau Dihapus',
-                text: "Mau dihapus data Stock Out",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Yes, delete it!',
-                cancelButtonText: 'No, cancel!',
-                reverseButtons: true
-              }).then((result) => {
-                if (result.value) {
-                  window.location = "/admin/stock-out/delete-stock/"+stockout_id+"";
-                } else if (
-                  /* Read more about handling dismissals below */
-                  result.dismiss === Swal.DismissReason.cancel
-                ) {
-                  swalWithBootstrapButtons.fire(
-                    'Cancelled',
-                    'Your imaginary file is safe :)',
-                    'error'
-                  )
+    function loadDataTable(){
+          $.ajax({
+            url: "{{url('/sales/getDataTable')}}",
+            success:function(data){
+              $('#cart_table').html(data);
+              calculate();
+            }
+          })
+        }
+        loadDataTable();
+        $('#formSave').submit(function(e){
+          e.preventDefault();
+          var request = new FormData(this);
+          var item_id = $('#item_id').val()
+          var price = $('#price').val()
+          var stock = $('#stock').val()
+          var qty = $('#qty').val()
+          if(item_id == '') {
+            toastr["error"]("Product Belum DiPilih","Error")
+            toastr.options = {
+              "closeButton": true,
+              "debug": false,
+              "newestOnTop": false,
+              "progressBar": false,
+              "positionClass": "toast-top-right",
+              "preventDuplicates": false,
+              "onclick": null,
+              "showDuration": "300",
+              "hideDuration": "1000",
+              "timeOut": "5000",
+              "extendedTimeOut": "1000",
+              "showEasing": "swing",
+              "hideEasing": "linear",
+              "showMethod": "fadeIn",
+              "hideMethod": "fadeOut"
+            }
+            $('#barcode').focus()
+          } else if(stock < 1) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: 'Stock Habis',
+            })
+            $('#item_id').val('')
+            $('#barcode').val('')
+            $('#barcode').focus();
+          } else if(stock < qty) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: 'Pembelian Lebih dari stock yang ada',
+            })
+            $('#qty').val('')
+            $('#qty').focus()
+          } else {
+            $.ajax({
+              url: "{{url('sales/cart')}}",
+              method: "POST",
+              data: request,
+              contentType: false,
+              cache: false,
+              processData: false,
+              success:function(data){
+                if(data == "sukses"){
+                  
+                  loadDataTable();
+                  calculate();
                 }
-              })
-          });
-              
+                else {
+                  alert('gagal menambah data');
+                }
+              }
+            });
+          }
+        });
+    
+      $(document).on('click', '#select', function() {
+        $('#item_id').val($(this).data('id'))
+        $('#barcode').val($(this).data('barcode'))
+        $('#price').val($(this).data('price'))
+        $('#stock').val($(this).data('stock'))
+        // $('#modal-item').modal('hide')
+      $('#closeModalTambah').click();
+    });
+    
     </script>
-    <script type="text/javascript">
-  $(document).ready(function() {
-    $(document).on('click', '#set_dtl', function() {
-      var barcode = $(this).data('barcode');
-      var itemname = $(this).data('itemname');
-      var detail = $(this).data('detail');
-      var suppliername = $(this).data('suppliername');
-      var qty = $(this).data('qty');
-      var date = $(this).data('date');
-      $('#barcode').text(barcode);
-      $('#item_name').text(itemname);
-      $('#detail').text(detail);
-      $('#supplier_name').text(suppliername);
-      $('#qty').text(qty);
-      $('#date').text(date);
-      $('#detail').text(detail);
-
+    <script>
+    function count_edit_modal() {
+      var price = $('#price_item').val()
+      var qty = $('#qty_item').val()
+      var discount = $('#discount_item').val()
+    
+      total_before = price * qty
+      $('#total_before').val(total_before)
+    
+      total = (price - discount) * qty
+      $('#total_item').val(total)
+      // unutk 0 discount
+      if(discount == '') {
+        $('#discount_item').val()
+      }
+    }
+    function calculate() {
+        var subtotal = 0;
+        $('#cart_table tr').each(function() {
+            subtotal += parseInt($(this).find('#total').text())
+        })
+        isNaN(subtotal) ? $('#sub_total').val(0) : $('#sub_total').val(subtotal)
+    
+        var discount = $('#discount').val()
+        var grand_total = subtotal - discount
+        if(isNaN(grand_total)) {
+            $('#grand_total').val(0)
+            $('#grand_total2').text(0)
+    
+        } else {
+            $('#grand_total').val(grand_total)
+            $('#grand_total2').text(grand_total)
+        }
+    
+        var cash = $('#cash').val();
+        cash != 0 ? $('#change').val(cash - grand_total) : $('#change').val(0)
+        // unutk 0 discount
+        if(discount == '') {
+            $('#discount').val()
+        }
+    }
+    
+    
+    $(document).on('keyup mouseup', '#discount, #cash', function() {
+        calculate()
     })
-  })
-</script>
+    $(document).on('keyup mouseup', '#price_item, #qty_item, #discount_item', function() {
+      count_edit_modal()
+    })
+    
+    $(document).ready(function() {
+        calculate()
+    })
+    $(document).on('click', '.btn-delete', function(e){
+          if(confirm('Apakah Anda Yakin?')) {//
+          e.preventDefault();
+          var cart_id = $(this).attr('cart-id');
+          $.ajax({
+            url: "{{url('/sales/delete-cart')}}/"+cart_id,
+            method: "GET",
+            success:function(data){
+              if(data == "sukses"){
+                toastr["success"]("Cart Berhasil Dihapus","Success")
+                $('#item_id').val('')
+                $('#barcode').val('')
+                loadDataTable();
+              } else {
+                alert('Gagal');
+            }
+            }
+          });
+          }//
+        });
+        $('#formEdit').submit(function(e){
+          e.preventDefault();
+          var request = new FormData(this);
+          var cart_id = $('#cartid_item').val();
+          var price = $('#price_item').val()
+          var qty = $('#qty_item').val()
+          var discount = $('#discount_item').val()
+          var total = $('#total_item').val()
+          if(price == '' || price < 1) {
+            toastr["error"]("Harga Tidak Boleh Kosong","Error")
+            $('#price_item').focus()
+          } else if(qty == '' || qty < 1) {
+            toastr["error"]("Qty Tidak Boleh Kosong","Error")
+            $('#qty_item').focus()
+          } else {
+            $.ajax({
+              url: "{{url('/sales/EditData') }}/"+cart_id,
+              method: "POST",
+              data: request,
+              contentType: false,
+              cache: false,
+              processData: false,
+              success:function(data){
+                if(data == "sukses"){
+                  $('#closeModalEdit').click();
+                  $('#formSave')[0].reset();
+                  alert('berhasil memperbarui data');
+                  loadDataTable();
+                }
+                else {
+                  alert('Gaga');
+                }
+              }
+            });
+          }
+        });
+        $(document).on('click', '#update_cart', function() {
+          $('#cartid_item').val($(this).data('cartid'))
+          $('#barcode_item').val($(this).data('barcode'))
+          $('#product_item').val($(this).data('product'))
+          $('#price_item').val($(this).data('price'))
+          $('#qty_item').val($(this).data('qty'))
+          $('#total_before').val($(this).data('price') * $(this).data('qty'))
+          $('#discount_item').val($(this).data('discount'))
+          $('#total_item').val($(this).data('total'))
+        });
+        
+    
+    
+    
+    </script>
 @endpush
