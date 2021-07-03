@@ -83,5 +83,5 @@ Route::group(['middleware' => ['auth', 'checkRole:1']], function () {
     Route::get('admin/stock-out', [StockOutController::class, 'index']);
     Route::get('admin/stock-out/add', [StockOutController::class, 'create']);
     Route::post('admin/stock-out/store', [StockOutController::class, 'store']);
-    Route::get('admin/stock-out/delete-stock/{stockout_id}', [StockOutController::class, 'delete_stock_in']);
+    Route::get('admin/stock-out/delete-stock/{stockout_id}', [StockOutController::class, 'delete_stock_out']);
 });

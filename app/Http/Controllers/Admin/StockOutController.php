@@ -58,4 +58,17 @@ class StockOutController extends Controller
         alert()->error('Stock Out Melebihi Stock Awal', 'Error');
         return back();
     }
+
+    public function delete_stock_out($stockout_id)
+    {
+        $stock = StockOut::find($stockout_id);
+        $user_id = Auth::user()->id;
+        // \LogActivity::addToLog([
+        //     'data' => 'Menghapus Stock Out ' . $stock->item_id,
+        //     'user' => $user_id,
+        // ]);
+        $stock->delete();
+        alert()->success('Stock Out Successfully Deleted', 'Success');
+        return back();
+    }
 }
