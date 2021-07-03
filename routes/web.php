@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\ItemController;
 use App\Http\Controllers\Admin\StockInController;
 use App\Http\Controllers\Admin\StockOutController;
 use App\Http\Controllers\Admin\SupplierController;
+use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Admin\UnitController;
 
 /*
@@ -84,4 +85,6 @@ Route::group(['middleware' => ['auth', 'checkRole:1']], function () {
     Route::get('admin/stock-out/add', [StockOutController::class, 'create']);
     Route::post('admin/stock-out/store', [StockOutController::class, 'store']);
     Route::get('admin/stock-out/delete-stock/{stockout_id}', [StockOutController::class, 'delete_stock_out']);
+
+    Route::get('admin/sales', [TransactionController::class, 'index']);
 });
