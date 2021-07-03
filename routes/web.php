@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\CustomerController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\ItemController;
+use App\Http\Controllers\Admin\PengeluaranController;
 use App\Http\Controllers\Admin\StockInController;
 use App\Http\Controllers\Admin\StockOutController;
 use App\Http\Controllers\Admin\SupplierController;
@@ -93,4 +94,6 @@ Route::group(['middleware' => ['auth', 'checkRole:1']], function () {
     Route::post('admin/sales/EditData/{cart_id}', [TransactionController::class, 'update']);
     Route::post('admin/sales/transaction', [TransactionController::class, 'kirim_semua']);
     Route::get('admin/sales/cetak/{sale_id}', [TransactionController::class, 'print']);
+
+    Route::get('admin/pengeluaran', [PengeluaranController::class, 'index']);
 });
