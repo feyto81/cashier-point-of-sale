@@ -22,7 +22,7 @@ use App\Http\Controllers\Admin\UnitController;
 */
 
 Route::get('/', function () {
-    return redirect('admin/home');
+    return view('welcome');
 });
 Route::get('admin/login', [HomeController::class, 'login'])->name('login');
 Route::post('admin/postlogin', [HomeController::class, 'postlogin']);

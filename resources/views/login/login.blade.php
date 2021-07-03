@@ -89,7 +89,9 @@
                                         </div>
                                         <div class="mb-3">
                                             {!! NoCaptcha::renderJs() !!}
+                                            
                                             {!! NoCaptcha::display() !!}
+                                            {{-- {!! NoCaptcha::renderJs() !!} --}}
                                         </div>
                                         <div class="form-check">
                                             <input class="form-check-input" name="remember" type="checkbox" id="remember-check" {{ old('remember') ? 'checked' : '' }}>

@@ -22,7 +22,7 @@
    
   </head>
   <body class="app sidebar-mini">
-    <header class="app-header" style="background-color: #d33724"><a class="app-header__logo" style="background-color: #dd4b39" href="/home">Kasir</a>
+    <header class="app-header" style="background-color: #d33724"><a class="app-header__logo" style="background-color: #dd4b39" href="/home">Kasir Application</a>
       <a class="app-sidebar__toggle" href="#" data-toggle="sidebar" aria-label="Hide Sidebar"></a>
       <ul class="app-nav">
         <li class="dropdown"><a class="app-nav__item" href="#" data-toggle="dropdown" aria-label="Open Profile Menu"><i class="fa fa-user fa-lg"></i></a>
