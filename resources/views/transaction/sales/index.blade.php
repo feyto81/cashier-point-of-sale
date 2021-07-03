@@ -114,7 +114,7 @@
                     <div class="box box-widget">
                         <div class="box-body">
                             <div align="right">
-                                <h4>Invoice <b><span id="sale_id" name="sale_id">b</span></b></h4>
+                                <h4>Invoice <b><span id="sale_id" name="sale_id">{{ $max_code }}</span></b></h4>
                                 <h1><b><span id="grand_total2" style="font-size: 50pt">0</span></b></h1>
                             </div>
                             <br>
@@ -152,6 +152,116 @@
             </div>
         </div>
       </div>
+      <form action="{{url('admin/sales/transaction/')}}" method="POST">
+        @csrf
+        <div class="row">
+          <div class="col-md-3">
+            <div class="tile">
+              <div class="tile-body">
+                <table widht="100%">
+                  <tr>
+                    <td style="vertical-align: top;width: 30%">
+                        <label for="sub_total">Sub Total</label>
+                    </td>
+                    <td>
+                        <div class="form-group">
+                            <input type="number" id="sub_total" name="sub_total" value="" class="form-control" readonly>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top">
+                        <label for="discount">Discount</label>
+                    </td>
+                    <td>
+                        <div class="form-group">
+                            <input type="number" id="discount" name="discount" value="0" min="0" class="form-control">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top">
+                        <label for="grand_total">Grand Total</label>
+                    </td>
+                    <td>
+                        <div class="form-group">
+                            <input type="number" id="grand_total" name="grand_total" class="form-control" readonly>
+                        </div>
+                    </td>
+                </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="tile">
+             <div class="tile-body">
+                <table width="100%">
+                    <tr>
+                        <td style="vertical-align: top; width: 30%">
+                            <label for="cash">Cash</label>
+                        </td>
+                        <td>
+                            <div class="form-group">
+                                <input type="number" id="cash" name="cash" value="0" min="0" class="form-control">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: top">
+                            <label for="change">Change</label>
+                        </td>
+                        <td>
+                            <div>
+                                <input type="number" id="change" name="change" class="form-control" readonly>
+                                <input type="hidden" id="date" name="date" value="{{date('Y-m-d')}}">
+                                <input type="hidden" id="sale_id" name="sale_id" value="{{$max_code}}">
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+             </div>
+            </div>
+         </div>
+
+         <div class="col-md-3">
+            <div class="tile">
+             <div class="tile-body">
+                <table width="100%">
+                    <tr>
+                        <td style="vertical-align: top">
+                            <label for="note">Note</label>
+                        </td>
+                        <td>
+                            <div>
+                                <textarea id="note" name="note" rows="3" class="form-control" required=""></textarea>
+                                
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+             </div>
+            </div>
+         </div>
+         <div class="col-md-3">
+            <div class="">
+             <div class="">
+                <table width="100%">
+                    <tr>
+                     
+                       <br><br>
+                        <button type="submit" id="process_payment" class="btn btn-flat btn-lg btn-success">
+                            <i class="fa fa-paper-plane-o"></i> Process Payment
+                        </button>
+                    </tr>
+                </table>
+                
+             </div>
+            </div>
+            
+         </div>
+        </div>
+      </form>
       @include('sweetalert::alert')
     </main>
 {{-- modal barcode --}}
@@ -201,13 +311,70 @@
       </div>
     </div>
   </div>
+    <!-- Modal Edit Cart Item -->
+<div class="modal fade" id="modal-item-edit">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <form id="formEdit" method="POST">
+        @csrf
+        <div class="modal-header">
+            <h5 class="modal-title">Update Product Item</h5>
+            <button type="button" class="close" id="closeModalEdit" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        <div class="modal-body table-responsive">
+          <input type="hidden" id="cartid_item">
+          <div class="form-group">
+            <label for="product_item">Product Item</label>
+            <div class="row">
+              <div class="col-md-5">
+                <input type="text" id="barcode_item" class="form-control" readonly>
+              </div>
+              <div class="col-md-7">
+                <input type="text" id="product_item" class="form-control" readonly>
+              </div>          
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="price_item">Price</label>
+            <input type="number" id="price_item" name="price" min="0" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="qty_item">Qty</label>
+            <input type="number" id="qty_item" name="qty" min="1" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="total_before">Total Before discount</label>
+            <input type="number" id="total_before" min="0" class="form-control" readonly>
+          </div>
+          <div class="form-group">
+            <label for="discount_item">Discount Per Item</label>
+            <input type="number" id="discount_item" name="discount_item" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="total_item">Total After Discount</label>
+            <input type="number" id="total_item" name="total" min="0" class="form-control" readonly>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <div class="pull-right">
+
+            <button type="submit" class="btn btn-flat btn-success"><i class="fa fa-paper-plane"></i> Save</button>
+            
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 @endsection
 @push('bottom')
 <script type="text/javascript">
 
     function loadDataTable(){
           $.ajax({
-            url: "{{url('/sales/getDataTable')}}",
+            url: "{{url('admin/sales/getDataTable')}}",
             success:function(data){
               $('#cart_table').html(data);
               calculate();
@@ -261,7 +428,7 @@
             $('#qty').focus()
           } else {
             $.ajax({
-              url: "{{url('sales/cart')}}",
+              url: "{{url('admin/sales/cart')}}",
               method: "POST",
               data: request,
               contentType: false,
@@ -349,7 +516,7 @@
           e.preventDefault();
           var cart_id = $(this).attr('cart-id');
           $.ajax({
-            url: "{{url('/sales/delete-cart')}}/"+cart_id,
+            url: "{{url('admin/sales/delete-cart')}}/"+cart_id,
             method: "GET",
             success:function(data){
               if(data == "sukses"){
@@ -380,7 +547,7 @@
             $('#qty_item').focus()
           } else {
             $.ajax({
-              url: "{{url('/sales/EditData') }}/"+cart_id,
+              url: "{{url('admin/sales/EditData') }}/"+cart_id,
               method: "POST",
               data: request,
               contentType: false,

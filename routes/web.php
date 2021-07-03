@@ -87,4 +87,10 @@ Route::group(['middleware' => ['auth', 'checkRole:1']], function () {
     Route::get('admin/stock-out/delete-stock/{stockout_id}', [StockOutController::class, 'delete_stock_out']);
 
     Route::get('admin/sales', [TransactionController::class, 'index']);
+    Route::post('admin/sales/cart', [TransactionController::class, 'save_cart']);
+    Route::get('admin/sales/getDataTable', [TransactionController::class, 'get']);
+    Route::get('admin/sales/delete-cart/{cart_id}', [TransactionController::class, 'delete_cart']);
+    Route::post('admin/sales/EditData/{cart_id}', [TransactionController::class, 'update']);
+    Route::post('admin/sales/transaction', [TransactionController::class, 'kirim_semua']);
+    Route::get('admin/sales/cetak/{sale_id}', [TransactionController::class, 'print']);
 });
