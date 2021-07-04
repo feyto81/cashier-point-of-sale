@@ -12,6 +12,7 @@ use App\Models\Supplier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\LogActivity;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -83,5 +84,11 @@ class HomeController extends Controller
         $user = User::all();
         $logs = \LogActivity::logActivityLists();
         return view('logactivity.index', compact('logs', 'user'));
+    }
+
+    public function deleteAll()
+    {
+        LogActivity::truncate();
+        return redirect()->back();
     }
 }

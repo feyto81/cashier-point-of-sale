@@ -134,4 +134,5 @@ Route::group(['middleware' => ['auth', 'checkRole:1']], function () {
     Route::post('admin/update-profile', [ProfileController::class, 'updateProfile']);
 
     Route::get('admin/logActivity', [HomeController::class, 'logActivity']);
+    Route::get('admin/logactivity/deleteAll', [HomeController::class, 'deleteAll']);
 });

@@ -16,6 +16,13 @@
       </div>
       <div class="row">
         <div class="col-md-12">
+          <a href="{{url('admin/logactivity/deleteAll')}}" class="btn btn-sm btn-danger"><i class="fa fa-trash" aria-hidden="true"></i> Delete all data</a>&nbsp;
+          
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-md-12">
           <div class="tile">
             <div class="tile-body">
               <div class="table-responsive">
