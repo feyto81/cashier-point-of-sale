@@ -52,8 +52,8 @@
           <button type="button" style="" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-plus"></i>
           Add Pengeluaran
     </button>&nbsp;
-    <a href="{{url('/pengeluaran/export-excel')}}" class="btn btn-sm btn-info"><i class="fa fa-file-excel-o"></i> Export Excel</a>&nbsp;
-          <a href="{{url('/pengeluaran/export-pdf')}}" target="_blank" class="btn btn-sm btn-warning"><i class="fa fa-file-pdf-o"></i> Export PDF</a>&nbsp;
+    <a href="{{url('admin/pengeluaran/export-excel')}}" class="btn btn-sm btn-info"><i class="fa fa-file-excel-o"></i> Export Excel</a>&nbsp;
+          <a href="{{url('admin/pengeluaran/export-pdf')}}" target="_blank" class="btn btn-sm btn-warning"><i class="fa fa-file-pdf-o"></i> Export PDF</a>&nbsp;
         </div>
       </div>
       <br>
@@ -106,7 +106,7 @@
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
-              <form action="{{url('/pengeluaran/add')}}" method="POST">
+              <form action="{{url('admin/pengeluaran/add')}}" method="POST">
                 <div class="modal-header">
                   <h5 class="modal-title" id="exampleModalLabel">Input Pengeluaran</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">

@@ -95,5 +95,11 @@ Route::group(['middleware' => ['auth', 'checkRole:1']], function () {
     Route::post('admin/sales/transaction', [TransactionController::class, 'kirim_semua']);
     Route::get('admin/sales/cetak/{sale_id}', [TransactionController::class, 'print']);
 
-    Route::get('admin/pengeluaran', [PengeluaranController::class, 'index']);
+    Route::get('admin/finance/pengeluaran', [PengeluaranController::class, 'index']);
+    Route::post('admin/pengeluaran/add', [PengeluaranController::class, 'create']);
+    Route::get('pengeluaran/delete-pengeluaran/{pengeluaran_id}', [PengeluaranController::class, 'destroy']);
+    Route::get('pengeluaran/edit-pengeluaran/{pengeluaran_id}', [PengeluaranController::class, 'edit_pengeluaran']);
+    Route::post('pengeluaran/update-pengeluaran/{pengeluaran_id}', [PengeluaranController::class, 'update_pengeluaran']);
+    Route::get('admin/pengeluaran/export-excel', [PengeluaranController::class, 'export_excel']);
+    Route::get('admin/pengeluaran/export-pdf', [PengeluaranController::class, 'export_pdf']);
 });
