@@ -136,3 +136,54 @@ Route::group(['middleware' => ['auth', 'checkRole:1']], function () {
     Route::get('admin/logActivity', [HomeController::class, 'logActivity']);
     Route::get('admin/logactivity/deleteAll', [HomeController::class, 'deleteAll']);
 });
+Route::group(['middleware' => ['auth', 'checkRole:1,2']], function () {
+    Route::get('admin/sales', [TransactionController::class, 'index']);
+    Route::post('admin/sales/cart', [TransactionController::class, 'save_cart']);
+    Route::get('admin/sales/getDataTable', [TransactionController::class, 'get']);
+    Route::get('admin/sales/delete-cart/{cart_id}', [TransactionController::class, 'delete_cart']);
+    Route::post('admin/sales/EditData/{cart_id}', [TransactionController::class, 'update']);
+    Route::post('admin/sales/transaction', [TransactionController::class, 'kirim_semua']);
+    Route::get('admin/sales/cetak/{sale_id}', [TransactionController::class, 'print']);
+
+    Route::get('admin/finance/pengeluaran', [PengeluaranController::class, 'index']);
+    Route::post('admin/pengeluaran/add', [PengeluaranController::class, 'create']);
+    Route::get('pengeluaran/delete-pengeluaran/{pengeluaran_id}', [PengeluaranController::class, 'destroy']);
+    Route::get('pengeluaran/edit-pengeluaran/{pengeluaran_id}', [PengeluaranController::class, 'edit_pengeluaran']);
+    Route::post('pengeluaran/update-pengeluaran/{pengeluaran_id}', [PengeluaranController::class, 'update_pengeluaran']);
+    Route::get('admin/pengeluaran/export-excel', [PengeluaranController::class, 'export_excel']);
+    Route::get('admin/pengeluaran/export-pdf', [PengeluaranController::class, 'export_pdf']);
+    Route::get('admin/finance/akumulasi', [KeuanganController::class, 'index']);
+    Route::get('admin/stock-in', [StockInController::class, 'index']);
+    Route::get('admin/stock-in/add', [StockInController::class, 'create']);
+    Route::post('admin/stock-in/store', [StockInController::class, 'store']);
+    Route::get('admin/stock-in/delete-stock/{stockin_id}', [StockInController::class, 'delete_stock_in']);
+
+    Route::get('admin/stock-out', [StockOutController::class, 'index']);
+    Route::get('admin/stock-out/add', [StockOutController::class, 'create']);
+    Route::post('admin/stock-out/store', [StockOutController::class, 'store']);
+    Route::get('admin/stock-out/delete-stock/{stockout_id}', [StockOutController::class, 'delete_stock_out']);
+});
+
+Route::group(['middleware' => ['auth', 'checkRole:1,3']], function () {
+    Route::get('admin/report/day', [ReportController::class, 'day']);
+    Route::get('admin/report/day/search', [ReportController::class, 'day_search']);
+    Route::get('admin/report/sale/dayp', [ReportController::class, 'day_p']);
+    Route::get('admin/report/sale/cetakpdf', [ReportController::class, 'day_pdf']);
+
+    Route::get('admin/report/month', [ReportController::class, 'month']);
+    Route::get('admin/report/sale/month', [ReportController::class, 'month_search']);
+    Route::get('admin/report/sale/monthp', [ReportController::class, 'month_p']);
+    Route::get('admin/report/sale/cetakmonthpdf', [ReportController::class, 'month_pdf']);
+
+    Route::get('admin/report/year', [ReportController::class, 'year']);
+    Route::get('admin/report/sale/year', [ReportController::class, 'year_search']);
+    Route::get('admin/report/sale/yearp', [ReportController::class, 'year_p']);
+    Route::get('admin/report/sale/cetakyearpdf', [ReportController::class, 'year_pdf']);
+});
+
+Route::group(['middleware' => ['auth', 'checkRole:1,2,3']], function () {
+    Route::get('admin/home', [HomeController::class, 'index'])->name('home');
+    Route::get('admin/profile', [ProfileController::class, 'index']);
+    Route::put('admin/update-password', [ProfileController::class, 'updatepassword']);
+    Route::post('admin/update-profile', [ProfileController::class, 'updateProfile']);
+});

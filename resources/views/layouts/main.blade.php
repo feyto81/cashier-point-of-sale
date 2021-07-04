@@ -8,7 +8,9 @@
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Vali Admin">
     <meta property="og:title" content="Vali - Free Bootstrap 4 admin theme">
-    <link href="{{asset('backend/images/favicon.png')}}" rel="icon">
+    {{-- <link href="{{asset('backend/images/favicon.png')}}" rel="icon"> --}}
+    <link rel="shortcut icon" href="{{asset('login/assets/images/favicon.ico')}}">
+
     <meta property="og:url" content="http://pratikborsadiya.in/blog/vali-admin">
     <meta property="og:image" content="http://pratikborsadiya.in/blog/vali-admin/hero-social.png">
     <meta property="og:description" content="Vali is a responsive and free admin theme built with Bootstrap 4, SASS and PUG.js. It's fully customizable and modular.">
@@ -43,18 +45,18 @@
               <span class="badge badge-success">{{Auth::user()->Level->name}}</span>
         </div>
       </div>
-      <ul class="app-menu">
+      {{-- <ul class="app-menu">
         <li><a class="app-menu__item" href="{{url('admin/home')}}"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Dashboard</span></a></li>
         <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-truck"></i><span class="app-menu__label">Supplier</span><i class="treeview-indicator fa fa-angle-right"></i></a>
           <ul class="treeview-menu">
             <li><a class="treeview-item" href="{{url('/admin/supplier/create')}}"><i class="icon fa fa-circle-o"></i> Add Supplier</a></li>
-            <li><a class="treeview-item" href="{{url('/admin/supplier')}}"><i class="icon fa fa-circle-o"></i> All Supplier</a></li>
+            <li><a class="treeview-item" href="{{url('/admin/supplier')}}"><i class="icon fa fa-circle-o"></i> List Supplier</a></li>
           </ul>
         </li>
         <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-users"></i><span class="app-menu__label">Customer</span><i class="treeview-indicator fa fa-angle-right"></i></a>
           <ul class="treeview-menu">
             <li><a class="treeview-item" href="{{url('/admin/customer/create')}}"><i class="icon fa fa-circle-o"></i> Add Customer</a></li>
-            <li><a class="treeview-item" href="{{url('/admin/customer')}}"><i class="icon fa fa-circle-o"></i> All Customer</a></li>
+            <li><a class="treeview-item" href="{{url('/admin/customer')}}"><i class="icon fa fa-circle-o"></i> List Customer</a></li>
           </ul>
         </li>
         <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-archive"></i><span class="app-menu__label">Products</span><i class="treeview-indicator fa fa-angle-right"></i></a>
@@ -90,7 +92,8 @@
         <li><a class="app-menu__item" href="{{url('admin/users')}}"><i class="app-menu__icon fa fa-user"></i><span class="app-menu__label">Users</span></a></li>
         <li><a class="app-menu__item" href="{{url('admin/profile')}}"><i class="app-menu__icon fa fa-user"></i><span class="app-menu__label">Profile</span></a></li>
         <li><a class="app-menu__item" href="{{url('admin/logActivity')}}"><i class="app-menu__icon fa fa-bookmark"></i><span class="app-menu__label">Log Activity</span></a></li>
-      </ul>
+      </ul> --}}
+      @yield('menu')
     </aside>
     @yield('content')
     @include('sweetalert::alert')
