@@ -41,9 +41,9 @@
 	<body onload="window.print()">
 		<div class="content">
 			<div class="title">
-				<b>Dewangga Store</b>
+				<b>Rizky Store</b>
 				<br>
-				Jl. Bumiharjo
+				Jl. Kedung
 			</div>
 			<div class="head">
                 @foreach($data as $item)
@@ -150,7 +150,7 @@
 			<div class="thanks">
 				--- Thank You ---
 				<br>
-				www.frizky.ga
+				www.rizky.ga
 			</div>
 		</div>
 	</body>

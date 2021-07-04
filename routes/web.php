@@ -5,7 +5,9 @@ use App\Http\Controllers\Admin\CustomerController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\ItemController;
+use App\Http\Controllers\Admin\KeuanganController;
 use App\Http\Controllers\Admin\PengeluaranController;
+use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\StockInController;
 use App\Http\Controllers\Admin\StockOutController;
 use App\Http\Controllers\Admin\SupplierController;
@@ -102,4 +104,20 @@ Route::group(['middleware' => ['auth', 'checkRole:1']], function () {
     Route::post('pengeluaran/update-pengeluaran/{pengeluaran_id}', [PengeluaranController::class, 'update_pengeluaran']);
     Route::get('admin/pengeluaran/export-excel', [PengeluaranController::class, 'export_excel']);
     Route::get('admin/pengeluaran/export-pdf', [PengeluaranController::class, 'export_pdf']);
+    Route::get('admin/finance/akumulasi', [KeuanganController::class, 'index']);
+
+    Route::get('admin/report/day', [ReportController::class, 'day']);
+    Route::get('admin/report/day/search', [ReportController::class, 'day_search']);
+    Route::get('admin/report/sale/dayp', [ReportController::class, 'day_p']);
+    Route::get('admin/report/sale/cetakpdf', [ReportController::class, 'day_pdf']);
+
+    Route::get('admin/report/month', [ReportController::class, 'month']);
+    Route::get('admin/report/sale/month', [ReportController::class, 'month_search']);
+    Route::get('admin/report/sale/monthp', [ReportController::class, 'month_p']);
+    Route::get('admin/report/sale/cetakmonthpdf', [ReportController::class, 'month_pdf']);
+
+    Route::get('admin/report/year', [ReportController::class, 'year']);
+    Route::get('admin/report/sale/year', [ReportController::class, 'year_search']);
+    Route::get('admin/report/sale/yearp', [ReportController::class, 'year_p']);
+    Route::get('admin/report/sale/cetakyearpdf', [ReportController::class, 'year_pdf']);
 });
