@@ -7,12 +7,14 @@ use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\ItemController;
 use App\Http\Controllers\Admin\KeuanganController;
 use App\Http\Controllers\Admin\PengeluaranController;
+use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\StockInController;
 use App\Http\Controllers\Admin\StockOutController;
 use App\Http\Controllers\Admin\SupplierController;
 use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Admin\UnitController;
+use App\Http\Controllers\Admin\UsersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -120,4 +122,14 @@ Route::group(['middleware' => ['auth', 'checkRole:1']], function () {
     Route::get('admin/report/sale/year', [ReportController::class, 'year_search']);
     Route::get('admin/report/sale/yearp', [ReportController::class, 'year_p']);
     Route::get('admin/report/sale/cetakyearpdf', [ReportController::class, 'year_pdf']);
+
+    Route::get('admin/users', [UsersController::class, 'index']);
+    Route::post('admin/users/add', [UsersController::class, 'create']);
+    Route::get('admin/users/edit-user/{id}', [UsersController::class, 'edit']);
+    Route::post('admin/users/update-user/{id}', [UsersController::class, 'update']);
+    Route::get('admin/users/delete/{id}', [UsersController::class, 'destroy']);
+
+    Route::get('admin/profile', [ProfileController::class, 'index']);
+    Route::put('admin/update-password', [ProfileController::class, 'updatepassword']);
+    Route::post('admin/update-profile', [ProfileController::class, 'updateProfile']);
 });
