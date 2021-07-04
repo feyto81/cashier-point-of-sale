@@ -1,10 +1,10 @@
 @extends('layouts.main')
-@section('title','List Customer | Kasir')
+@section('title','List Customer | Kasir Application')
 @section('content')
 <main class="app-content">
       <div class="app-title">
         <div>
-          <h1><i class="fa fa-th-list"></i> All Customer</h1>
+          <h1><i class="fa fa-th-list"></i> List Customer</h1>
           <p>Table to display analytical data effectively</p>
         </div>
         <ul class="app-breadcrumb breadcrumb side">
@@ -60,7 +60,7 @@
                     <tr>
                         <td>{{$loop->iteration}}</td>
                         <td>{{$item->name}}</td>
-                        @if($item->gender=='laki-laki')
+                        @if($item->gender=='Laki-Laki')
                         <td>Laki-laki</td>
                         @else
                         <td>Perempuan</td>

@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Exports\CustomerExcel;
-use App\Http\Controllers\Controller;
-use App\Imports\CustomerImport;
-use Illuminate\Http\Request;
-use App\Models\Customer;
-use Maatwebsite\Excel\Facades\Excel;
 use PDF;
+use App\Models\Customer;
+use Illuminate\Http\Request;
+use App\Exports\CustomerExcel;
+use App\Imports\CustomerImport;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CustomerController extends Controller
 {
@@ -35,12 +36,17 @@ class CustomerController extends Controller
             'gender' => 'required',
             'email' => 'required|unique:customers'
         ]);
+        $user_id = Auth::user()->id;
         $customer = new Customer();
         $customer->name = $request->name;
         $customer->phone = $request->phone;
         $customer->address = $request->address;
         $customer->gender = $request->gender;
         $customer->email = $request->email;
+        \LogActivity::addToLog([
+            'data' => 'Menambahkan Customer ' . $request->name,
+            'user' => $user_id,
+        ]);
         $result = $customer->save();
         if ($result) {
             alert()->success('Customer has been saved', 'Success');
@@ -57,7 +63,12 @@ class CustomerController extends Controller
 
     public function destroy($customer_id)
     {
+        $user_id = Auth::user()->id;
         $customer = Customer::find($customer_id);
+        \LogActivity::addToLog([
+            'data' => 'Menghapus Customer ' . $customer->name,
+            'user' => $user_id,
+        ]);
         $customer->delete();
         alert()->success('Customer has been deleted.', 'Success');
         return back();
@@ -78,12 +89,17 @@ class CustomerController extends Controller
             'gender' => 'required',
             'email' => 'required'
         ]);
+        $user_id = Auth::user()->id;
         $customer = Customer::find($customer_id);
         $customer->name = $request->name;
         $customer->phone = $request->phone;
         $customer->address = $request->address;
         $customer->email = $request->email;
         $customer->gender = $request->gender;
+        \LogActivity::addToLog([
+            'data' => 'Mengupdate Customer ' . $request->name,
+            'user' => $user_id,
+        ]);
         $customer->update();
         alert()->success('Supplier has been updated', 'Success');
         return redirect('admin/customer');

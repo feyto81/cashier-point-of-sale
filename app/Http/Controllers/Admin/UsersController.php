@@ -46,10 +46,10 @@ class UsersController extends Controller
         $user->level_id = $request->level_id;
         $user->password = Hash::make($request->password);
         $result = $user->save();
-        // \LogActivity::addToLog([
-        //     'data' => 'Menambahkan User ' . $request->name,
-        //     'user' => $user_id,
-        // ]);
+        \LogActivity::addToLog([
+            'data' => 'Menambahkan User ' . $request->name,
+            'user' => $user_id,
+        ]);
         if ($result) {
             alert()->success('User Successfully Saved', 'Success');
             return back();
@@ -96,10 +96,10 @@ class UsersController extends Controller
         }
 
         $aks = $user->save();
-        // \LogActivity::addToLog([
-        //     'data' => 'Mengupdate User ' . $user->name,
-        //     'user' => $user_id,
-        // ]);
+        \LogActivity::addToLog([
+            'data' => 'Mengupdate User ' . $user->name,
+            'user' => $user_id,
+        ]);
         if ($aks) {
             alert()->success('User Successfully Updated', 'Success');
             return redirect('admin/users');
@@ -112,10 +112,10 @@ class UsersController extends Controller
     {
         $user_id = Auth::user()->id;
         $user = User::find($id);
-        // \LogActivity::addToLog([
-        //     'data' => 'Menghapus User ' . $user->name,
-        //     'user' => $user_id,
-        // ]);
+        \LogActivity::addToLog([
+            'data' => 'Menghapus User ' . $user->name,
+            'user' => $user_id,
+        ]);
         $user->delete();
         alert()->success('User Successfully Deleted', 'Berhasil');
         return back();

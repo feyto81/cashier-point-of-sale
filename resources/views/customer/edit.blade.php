@@ -45,12 +45,12 @@
                 {{ csrf_field() }}
               <div class="form-group">
                 <label for="name">Name *</label>
-                <input type="text" class="form-control" name="name" id="name" value="{{$customer->name}}">
+                <input type="text" autocomplete="off" class="form-control" name="name" id="name" value="{{$customer->name}}">
                 
               </div>
               <div class="form-group">
                 <label for="email">Email *</label>
-                <input type="email" class="form-control" name="email" id="email" value="{{$customer->email}}">
+                <input type="email" autocomplete="off" class="form-control" name="email" id="email" value="{{$customer->email}}">
                 
               </div>
               <div class="form-group">
@@ -63,7 +63,7 @@
               </div>
               <div class="form-group">
                 <label for="phone">Phone</label>
-                <input type="text" class="form-control" name="phone" id="phone" value="{{$customer->phone}}">
+                <input type="text" autocomplete="off" class="form-control" name="phone" id="phone" value="{{$customer->phone}}">
             
               </div>
               <div class="form-group">

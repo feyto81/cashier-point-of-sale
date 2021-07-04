@@ -77,7 +77,7 @@
                                         @csrf
                                         <div class="mb-3">
                                             <label for="email" class="form-label">Email</label>
-                                            <input type="email" class="form-control" name="email" id="email" @if(old('email')) value="{{ old('email') }}" @else value="" @endif autofocus>
+                                            <input type="email" autocomplete="off" class="form-control" name="email" id="email" @if(old('email')) value="{{ old('email') }}" @else value="" @endif autofocus>
                                         </div>
                 
                                         <div class="mb-3">

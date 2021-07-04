@@ -4,7 +4,7 @@
 <main class="app-content">
       <div class="app-title">
         <div>
-          <h1><i class="fa fa-th-list"></i> All Category</h1>
+          <h1><i class="fa fa-th-list"></i> List Category</h1>
           <p>Table to display analytical data effectively</p>
         </div>
         <ul class="app-breadcrumb breadcrumb side">

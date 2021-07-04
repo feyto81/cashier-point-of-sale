@@ -30,6 +30,7 @@ class ProfileController extends Controller
 
         ]);
         $user_id = Auth::user()->id;
+        $user_name = Auth::user()->id;
         $oldPassword = $request->oldPassword;
         $newPassword = $request->newPassword;
         $user_id = Auth::user()->id;
@@ -39,10 +40,10 @@ class ProfileController extends Controller
             return back();
         } else {
             $request->user()->fill(['password' => Hash::make($newPassword)])->save();
-            // \LogActivity::addToLog([
-            //     'data' => 'Mengupdate Password ' . $user_id,
-            //     'user' => $user_id,
-            // ]);
+            \LogActivity::addToLog([
+                'data' => 'Mengupdate Password ' . $user_name,
+                'user' => $user_id,
+            ]);
             alert()->success('Password has been updated', 'Success');
             return back()->with('msg', '');
         }
@@ -56,11 +57,13 @@ class ProfileController extends Controller
 
         ]);
         $user_id = Auth::user()->id;
+        $user_name = Auth::user()->name;
+
         DB::table('users')->where('id', $user_id)->update($request->except('_token', 'password', 'level_id', 'email'));
-        // \LogActivity::addToLog([
-        //     'data' => 'Mengupdate Profile ' . $user_id,
-        //     'user' => $user_id,
-        // ]);
+        \LogActivity::addToLog([
+            'data' => 'Mengupdate Profile ' . $user_name,
+            'user' => $user_id,
+        ]);
         alert()->success('Profile Successfully Updated', 'Success');
         return back();
     }

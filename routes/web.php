@@ -132,4 +132,6 @@ Route::group(['middleware' => ['auth', 'checkRole:1']], function () {
     Route::get('admin/profile', [ProfileController::class, 'index']);
     Route::put('admin/update-password', [ProfileController::class, 'updatepassword']);
     Route::post('admin/update-profile', [ProfileController::class, 'updateProfile']);
+
+    Route::get('admin/logActivity', [HomeController::class, 'logActivity']);
 });

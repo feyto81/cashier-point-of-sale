@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use PDF;
 use App\Models\Supplier;
-use Maatwebsite\Excel\Facades\Excel;
+use App\Models\LogActivity;
+use Illuminate\Http\Request;
 use App\Exports\SupplierExcel;
 use App\Imports\SupplierImport;
-use PDF;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SupplierController extends Controller
 {
@@ -34,11 +36,16 @@ class SupplierController extends Controller
             'address' => 'required',
             'description' => 'required',
         ]);
+        $user_id = Auth::user()->id;
         $supplier = new Supplier;
         $supplier->name = $request->name;
         $supplier->phone = $request->phone;
         $supplier->address = $request->address;
         $supplier->description = $request->description;
+        \LogActivity::addToLog([
+            'data' => 'Menambahkan Supplier ' . $request->name,
+            'user' => $user_id,
+        ]);
         $result = $supplier->save();
         if ($result) {
             alert()->success('Supplier has been saved', 'Success');
@@ -66,11 +73,16 @@ class SupplierController extends Controller
             'address' => 'required',
             'description' => 'required',
         ]);
+        $user_id = Auth::user()->id;
         $supplier = Supplier::find($supplier_id);
         $supplier->name = $request->name;
         $supplier->phone = $request->phone;
         $supplier->address = $request->address;
         $supplier->description = $request->description;
+        \LogActivity::addToLog([
+            'data' => 'Mengupdate Supplier ' . $request->name,
+            'user' => $user_id,
+        ]);
         $supplier->update();
         alert()->success('Supplier has been saved', 'Success');
         return redirect('admin/supplier');
@@ -79,7 +91,12 @@ class SupplierController extends Controller
 
     public function destroy($supplier_id)
     {
+        $user_id = Auth::user()->id;
         $supplier = Supplier::find($supplier_id);
+        \LogActivity::addToLog([
+            'data' => 'Menghapus Supplier ' . $supplier->name,
+            'user' => $user_id,
+        ]);
         $supplier->delete();
         alert()->success('Category has been deleted.', 'Success');
         return back();

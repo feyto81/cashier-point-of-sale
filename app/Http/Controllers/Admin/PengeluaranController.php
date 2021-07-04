@@ -36,10 +36,10 @@ class PengeluaranController extends Controller
         $pengeluaran = new Pengeluaran();
         $pengeluaran->pengeluaran_count = $request->pengeluaran_count;
         $pengeluaran->keterangan = $request->keterangan;
-        // \LogActivity::addToLog([
-        //     'data' => 'Menambahkan Pengeluaran ' . $request->pengeluaran_count,
-        //     'user' => $user_id,
-        // ]);
+        \LogActivity::addToLog([
+            'data' => 'Menambahkan Pengeluaran ' . $request->pengeluaran_count,
+            'user' => $user_id,
+        ]);
         $result = $pengeluaran->save();
         if ($result) {
             alert()->success('Data Successfully Saved', 'Success');
@@ -54,10 +54,10 @@ class PengeluaranController extends Controller
     {
         $pengeluaran = Pengeluaran::find($pengeluaran_id);
         $user_id = Auth::user()->id;
-        // \LogActivity::addToLog([
-        //     'data' => 'Menghapus Pengeluaran ' . $pengeluaran->pengeluaran_count,
-        //     'user' => $user_id,
-        // ]);
+        \LogActivity::addToLog([
+            'data' => 'Menghapus Pengeluaran ' . $pengeluaran->pengeluaran_count,
+            'user' => $user_id,
+        ]);
         $pengeluaran->delete();
         alert()->success('Data Successfully Deleted', 'Berhasil');
         return back();
@@ -86,10 +86,10 @@ class PengeluaranController extends Controller
         $pengeluaran = Pengeluaran::find($pengeluaran_id);
         $pengeluaran->pengeluaran_count = $request->get('pengeluaran_count');
         $pengeluaran->keterangan = $request->get('keterangan');
-        // \LogActivity::addToLog([
-        //     'data' => 'Mengupdate Pengeluaran ' . $request->pengeluaran_count,
-        //     'user' => $user_id,
-        // ]);
+        \LogActivity::addToLog([
+            'data' => 'Mengupdate Pengeluaran ' . $request->pengeluaran_count,
+            'user' => $user_id,
+        ]);
         $aks = $pengeluaran->save();
         if ($aks) {
             alert()->success('Pengeluaran Successfully Updated', 'Success');

@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Category;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
@@ -24,8 +25,13 @@ class CategoryController extends Controller
         $this->validate($request, [
             'name' => 'required|min:2|unique:categories',
         ]);
+        $user_id = Auth::user()->id;
         $category = new Category;
         $category->name = $request->name;
+        \LogActivity::addToLog([
+            'data' => 'Menambahkan Category ' . $request->name,
+            'user' => $user_id,
+        ]);
         $result = $category->save();
         if ($result) {
             alert()->success('Category has been saved', 'Success');
@@ -38,7 +44,12 @@ class CategoryController extends Controller
 
     public function destroy(Request $request, $category_id)
     {
+        $user_id = Auth::user()->id;
         $category = Category::find($category_id);
+        \LogActivity::addToLog([
+            'data' => 'Delete Category ' . $category->name,
+            'user' => $user_id,
+        ]);
         $category->delete();
         alert()->success('Category has been deleted', 'Success');
         return back();
@@ -55,8 +66,13 @@ class CategoryController extends Controller
         $this->validate($request, [
             'name' => 'required|min:2',
         ]);
+        $user_id = Auth::user()->id;
         $category = Category::find($category_id);
         $category->name = $request->name;
+        \LogActivity::addToLog([
+            'data' => 'Update Category ' . $request->name,
+            'user' => $user_id,
+        ]);
         $category->update();
         alert()->success('Category has been updated', 'Success');
         return redirect('/admin/category');

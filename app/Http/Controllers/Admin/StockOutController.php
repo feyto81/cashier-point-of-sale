@@ -43,6 +43,10 @@ class StockOutController extends Controller
             $data->date = $request->date;
             $data->user_id = $user_id;
             $result = $data->save();
+            \LogActivity::addToLog([
+                'data' => 'Menambahkan Stock Out ' . $request->item_id,
+                'user' => $user_id,
+            ]);
             if ($result) {
                 alert()->success('Stock Out Successfully Add', 'Success');
                 return redirect('admin/stock-out');
@@ -51,10 +55,7 @@ class StockOutController extends Controller
                 return back();
             }
         }
-        // \LogActivity::addToLog([
-        //     'data' => 'Menambahkan Stock Out ' . $request->item_id,
-        //     'user' => $user_id,
-        // ]);
+
         alert()->error('Stock Out Melebihi Stock Awal', 'Error');
         return back();
     }
@@ -63,10 +64,10 @@ class StockOutController extends Controller
     {
         $stock = StockOut::find($stockout_id);
         $user_id = Auth::user()->id;
-        // \LogActivity::addToLog([
-        //     'data' => 'Menghapus Stock Out ' . $stock->item_id,
-        //     'user' => $user_id,
-        // ]);
+        \LogActivity::addToLog([
+            'data' => 'Menghapus Stock Out ' . $stock->item_id,
+            'user' => $user_id,
+        ]);
         $stock->delete();
         alert()->success('Stock Out Successfully Deleted', 'Success');
         return back();

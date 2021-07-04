@@ -46,11 +46,11 @@
                 {{ csrf_field() }}
                 <div class="form-group">
                     <label for="name">Supplier Name *</label>
-                    <input type="text" class="form-control" name="name" id="name">
+                    <input type="text" autocomplete="off" class="form-control" name="name" id="name">
                 </div>
                 <div class="form-group">
                     <label for="phone">Phone</label>
-                    <input type="text" class="form-control" name="phone" id="phone">
+                    <input type="text" autocomplete="off" class="form-control" name="phone" id="phone">
                 </div>
                 <div class="form-group">
                     <label for="address">Address</label>
@@ -58,7 +58,7 @@
                 </div>
                 <div class="form-group">
                     <label for="description">Description</label>
-                    <input type="text" class="form-control" name="description" id="description">
+                    <input type="text" autocomplete="off" class="form-control" name="description" id="description">
                 </div>
             </div>
             <div class="tile-footer">

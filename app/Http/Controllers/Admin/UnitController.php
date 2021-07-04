@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Unit;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class UnitController extends Controller
 {
@@ -24,8 +25,13 @@ class UnitController extends Controller
         $this->validate($request, [
             'name' => 'required|min:2|unique:units',
         ]);
+        $user_id = Auth::user()->id;
         $unit = new Unit;
         $unit->name = $request->name;
+        \LogActivity::addToLog([
+            'data' => 'Menambahkan Unit ' . $request->name,
+            'user' => $user_id,
+        ]);
         $result = $unit->save();
         if ($result) {
             alert()->success('Unit has been saved', 'Success');
@@ -38,7 +44,12 @@ class UnitController extends Controller
 
     public function destroy(Request $request, $unit_id)
     {
+        $user_id = Auth::user()->id;
         $unit = Unit::find($unit_id);
+        \LogActivity::addToLog([
+            'data' => 'Menghapus Unit ' . $unit->name,
+            'user' => $user_id,
+        ]);
         $unit->delete();
         alert()->success('Unit has been deleted', 'Success');
         return back();
@@ -55,8 +66,13 @@ class UnitController extends Controller
         $this->validate($request, [
             'name' => 'required|min:2',
         ]);
+        $user_id = Auth::user()->id;
         $unit = Unit::find($unit_id);
         $unit->name = $request->name;
+        \LogActivity::addToLog([
+            'data' => 'Mengupdate Unit ' . $request->name,
+            'user' => $user_id,
+        ]);
         $unit->update();
         alert()->success('Unit has been updated', 'Success');
         return redirect('/admin/unit');

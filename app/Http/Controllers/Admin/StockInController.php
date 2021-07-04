@@ -22,9 +22,9 @@ class StockInController extends Controller
         $data['supplier'] = Supplier::all();
         $data['stock'] = StockIn::all();
         $data['item'] = DB::table('items')
-        ->join('units', 'items.unit_id', '=', 'units.unit_id')
-        ->select('items.*', 'units.*', 'units.name as unit_name')
-        ->get();
+            ->join('units', 'items.unit_id', '=', 'units.unit_id')
+            ->select('items.*', 'units.*', 'units.name as unit_name')
+            ->get();
         return view('transaction.stock_in.add', $data);
     }
 
@@ -43,7 +43,10 @@ class StockInController extends Controller
                 'date' => $request->date,
                 'user_id' => $user_id
             ]);
-            
+            \LogActivity::addToLog([
+                'data' => 'Menambahkan Stock In ',
+                'user' => $user_id,
+            ]);
             alert()->success('Stock In Successfully Added', 'Success');
             return redirect('admin/stock-in');
         }
@@ -52,6 +55,10 @@ class StockInController extends Controller
     {
         $stock = Stockin::find($stockin_id);
         $user_id = Auth::user()->id;
+        \LogActivity::addToLog([
+            'data' => 'Menghapus Stock In ' . $stock->item_id,
+            'user' => $user_id,
+        ]);
         $stock->delete();
         alert()->success('Stock Successfully Deleted', 'Success');
         return back();

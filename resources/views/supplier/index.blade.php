@@ -1,10 +1,10 @@
 @extends('layouts.main')
-@section('title','List Supplier | Kasir')
+@section('title','List Supplier | Kasir Application')
 @section('content')
 <main class="app-content">
     <div class="app-title">
       <div>
-        <h1><i class="fa fa-th-list"></i> All Supplier</h1>
+        <h1><i class="fa fa-th-list"></i> List Supplier</h1>
         <p>Table to display analytical data effectively</p>
       </div>
       <ul class="app-breadcrumb breadcrumb side">

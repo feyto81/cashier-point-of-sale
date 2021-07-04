@@ -104,10 +104,10 @@ class TransactionController extends Controller
             'date' => $request->date,
             'user_id' => $user_id,
         ]);
-        // \LogActivity::addToLog([
-        //     'data' => 'Menambahkan Transaksi ',
-        //     'user' => $user_id,
-        // ]);
+        \LogActivity::addToLog([
+            'data' => 'Menambahkan Transaksi ',
+            'user' => $user_id,
+        ]);
         $select = DB::table('carts')->get();
 
         foreach ($select as $s) {

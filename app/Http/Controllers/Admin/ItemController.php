@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\Item;
-use App\Models\Category;
-use App\Models\Unit;
-use Storage;
 use DB;
 use PDF;
+use Storage;
+use App\Models\Item;
+use App\Models\Unit;
+use App\Models\Category;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 
 class ItemController extends Controller
@@ -37,6 +38,7 @@ class ItemController extends Controller
             'price' => 'required',
             'image' => 'required',
         ]);
+        $user_id = Auth::user()->id;
         if (empty($request->file('image'))) {
             Item::create([
                 'barcode' => $request->barcode,
@@ -56,14 +58,23 @@ class ItemController extends Controller
                 'image' => $request->file('image')->store('images', 'public'),
             ]);
         }
+        \LogActivity::addToLog([
+            'data' => 'Menambahkan Item ' . $request->name,
+            'user' => $user_id,
+        ]);
         alert()->success('Item has been saved', 'Success');
         return redirect('/admin/item');
     }
 
     public function destroy(Request $request, $item_id)
     {
+        $user_id = Auth::user()->id;
         $item = Item::find($item_id);
         Storage::delete($item->image);
+        \LogActivity::addToLog([
+            'data' => 'Menghapus Item ' . $item->name,
+            'user' => $user_id,
+        ]);
         $item->delete();
         alert()->success('Item has been deleted', 'Success');
         return back();
@@ -87,6 +98,7 @@ class ItemController extends Controller
             'unit_id' => 'required',
             'price' => 'required',
         ]);
+        $user_id = Auth::user()->id;
         if (empty($request->file('image'))) {
             $item = Item::find($item_id);
             $item->update([
@@ -109,7 +121,10 @@ class ItemController extends Controller
                 'image' => $request->file('image')->store('images', 'public'),
             ]);
         }
-
+        \LogActivity::addToLog([
+            'data' => 'Mengupdate Item ' . $request->name,
+            'user' => $user_id,
+        ]);
         alert()->success('Item has been updated', 'Success');
         return redirect('/admin/item');
     }

@@ -45,11 +45,11 @@
                   
                     <div class="form-group">
                       <label class="control-label" for="barcode">Barcode *</label>
-                      <input type="text" class="form-control" name="barcode" id="barcode">
+                      <input type="text" autocomplete="off" class="form-control" name="barcode" id="barcode">
                     </div>
                     <div class="form-group">
                         <label class="control-label" for="name">Product Name *</label>
-                        <input type="text" class="form-control" name="name" id="name">
+                        <input type="text" autocomplete="off" class="form-control" name="name" id="name">
                     </div>
                     <div class="form-group">
                         <label class="control-label" for="category_id">Category *</label>
@@ -79,7 +79,7 @@
                         </div>
                       <div class="form-group">
                           <label class="control-label" for="name">Price *</label>
-                          <input type="text" class="form-control" name="price" id="price">
+                          <input type="text" autocomplete="off" class="form-control" name="price" id="price">
                       </div>
                       <div class="form-group">
                         <label for="image">Image *</label>
